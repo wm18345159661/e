@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css.css">
+  <style>
+   
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <div class="contentshu"></div>
+    <div class="scrollBRA"></div>
+  </div>
+
+</body>
+<script src="js/transform.js"></script>
+<script type="text/javascript">
+  // 跨过；单步执行；不进入函式；逐过程
+  // https://blog.csdn.net/weixin_41819731/article/details/80472232   https://www.liulanqi.com/14795.html
+  document.addEventListener('visibilitychange', function () {
+    console.log(document.hidden + new Date());
+  });
+
+  window.onload = function () {
+    document.addEventListener("touchstart", function (ev) {
+      ev.preventDefault()
+    })
+    var contentshu = document.querySelector('#wrap .contentshu');
+    var wrapshu = document.querySelector('#wrap ');
+    var time = new Date().getTime()
+    for (var i = 0; i < 50; i++) {
+      if (i == 10) {
+        contentshu.innerHTML += '<li class="posiabso" > w</li>'
+      }
+      contentshu.innerHTML += '<li class=""> w</li>'
+
+    }
+    time = new Date().getTime() - time
+    console.log(time)
+
+    var scrollBRA = document.querySelector(".scrollBRA");
+    var cliH = document.documentElement.clientHeight;
+
+    setTimeout(function () {
+      scrollBRA.style.height = cliH * (cliH / contentshu.offsetHeight) + 'px';
+
+    }, 100)
+
+
+
+
+    var callBack = {
+      start: function () {
+        scrollBRA.style.opacity = 1
+
+      },
+      move: function () {
+        var scale = cliH / contentshu.offsetHeight
+        damu.css(scrollBRA, 'translateY', -scale * damu.css(this, 'translateY'))
+      },
+      end: function () { scrollBRA.style.opacity = 0 },
+      over: function () {
+
+        scrollBRA.style.opacity = 0
+      }
+    }
+    damu.rem();
+    damu.ydrag(wrapshu, callBack);
+  }
+</script>
+
+</html>
